@@ -70,19 +70,19 @@ public class BallThread extends Thread {
   }
 
   public void suspendMe() {
-  synchronized (lock) {
-    isSuspended = true;
+    synchronized (lock) {
+      isSuspended = true;
+    }
+    LOGGER.info("Begin to suspend BallThread");
   }
-  LOGGER.info("Begin to suspend BallThread");
-}
 
   public void resumeMe() {
-  synchronized (lock) {
-    isSuspended = false;
-    lock.notify();
+    synchronized (lock) {
+      isSuspended = false;
+      lock.notify();
+    }
+    LOGGER.info("Begin to resume BallThread");
   }
-  LOGGER.info("Begin to resume BallThread");
-}
 
   public void stopMe() {
     synchronized (lock) {
