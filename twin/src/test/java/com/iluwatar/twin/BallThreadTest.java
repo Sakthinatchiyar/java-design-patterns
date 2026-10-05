@@ -137,4 +137,27 @@ class BallThreadTest {
           verifyNoMoreInteractions(ballItem);
         });
   }
+
+  /** Verify if the BallThread exits gracefully when interrupted while suspended */
+  @Test
+  void testInterruptWhileSuspended() {
+    assertTimeout(
+        ofMillis(5000),
+        () -> {
+          final var ballThread = new BallThread();
+
+          final var ballItem = mock(BallItem.class);
+          ballThread.setTwin(ballItem);
+
+          ballThread.suspendMe();
+          ballThread.start();
+
+          sleep(200);
+
+          ballThread.interrupt();
+          ballThread.join();
+
+          verifyNoMoreInteractions(ballItem);
+        });
+  }
 }
