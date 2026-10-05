@@ -51,7 +51,8 @@ public class BallThread extends Thread {
           try {
             lock.wait();
           } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            Thread.currentThread().interrupt();
+            return;
           }
         }
       }
