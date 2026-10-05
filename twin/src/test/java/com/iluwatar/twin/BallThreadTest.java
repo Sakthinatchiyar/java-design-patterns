@@ -129,7 +129,13 @@ class BallThreadTest {
           ballThread.suspendMe();
           ballThread.start();
 
-          sleep(200);
+          assertTimeout(
+              ofMillis(1000),
+              () -> {
+                while (ballThread.getState() != Thread.State.WAITING) {
+                  Thread.yield();
+                }
+              });
 
           ballThread.stopMe();
           ballThread.join();
